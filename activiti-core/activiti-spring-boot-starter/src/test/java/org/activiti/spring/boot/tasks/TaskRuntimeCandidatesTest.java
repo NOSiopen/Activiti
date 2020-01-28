@@ -2,6 +2,7 @@ package org.activiti.spring.boot.tasks;
 
 import org.activiti.api.task.model.Task;
 import org.activiti.api.task.model.builders.TaskPayloadBuilder;
+import org.activiti.api.task.model.impl.TaskImpl;
 import org.activiti.api.task.runtime.TaskAdminRuntime;
 import org.activiti.api.task.runtime.TaskRuntime;
 import org.activiti.spring.boot.RuntimeTestConfiguration;
@@ -57,7 +58,7 @@ public class TaskRuntimeCandidatesTest {
         securityUtil.logInAs("dean");
 
         // the target user should be able to see the task as well
-        Task task = taskRuntime.task(createTask.getId());
+        TaskImpl task = (TaskImpl) taskRuntime.task(createTask.getId());
         assertThat(task.getAssignee()).isEqualTo("dean");
         assertThat(task.getStatus()).isEqualTo(Task.TaskStatus.ASSIGNED);
 
@@ -78,7 +79,7 @@ public class TaskRuntimeCandidatesTest {
                 .extracting(event -> event.getEntity().getUserId())
                 .contains("garth");
 
-        task = taskRuntime.task(createTask.getId());
+        task = (TaskImpl) taskRuntime.task(createTask.getId());
         userCandidatesOnTask = task.getCandidateUsers();
         assertThat(userCandidatesOnTask).isEmpty();
 
@@ -98,7 +99,7 @@ public class TaskRuntimeCandidatesTest {
                 .contains("garth",
                           "garth");
 
-        task = taskRuntime.task(createTask.getId());
+        task = (TaskImpl) taskRuntime.task(createTask.getId());
         userCandidatesOnTask = task.getCandidateUsers();
         assertThat(userCandidatesOnTask).hasSize(1);
 
@@ -126,7 +127,7 @@ public class TaskRuntimeCandidatesTest {
                 .extracting(event -> event.getEntity().getGroupId())
                 .contains("test");
 
-        Task task = taskRuntime.task(createTask.getId());
+        TaskImpl task = (TaskImpl) taskRuntime.task(createTask.getId());
         List<String> groupCandidatesOnTask = task.getCandidateGroups();
         assertThat(groupCandidatesOnTask).hasSize(1);
 
@@ -144,7 +145,7 @@ public class TaskRuntimeCandidatesTest {
                 .extracting(event -> event.getEntity().getGroupId())
                 .contains("test");
 
-        task = taskRuntime.task(createTask.getId());
+        task = (TaskImpl) taskRuntime.task(createTask.getId());
         groupCandidatesOnTask = task.getCandidateGroups();
         assertThat(groupCandidatesOnTask).isEmpty();
 
