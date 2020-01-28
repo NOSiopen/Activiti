@@ -158,7 +158,7 @@ public class TaskRuntimeCandidatesTest {
                                                .withCandidateGroup("test")
                                                .build());
 
-        task = taskRuntime.task(createTask.getId());
+        task = (TaskImpl) taskRuntime.task(createTask.getId());
         groupCandidatesOnTask = task.getCandidateGroups();
         assertThat(groupCandidatesOnTask).hasSize(1);
 
