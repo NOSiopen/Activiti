@@ -3,6 +3,7 @@ package org.activiti.spring.boot.tasks;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import java.util.Set;
 
 import org.activiti.api.task.model.Task;
 import org.activiti.api.task.model.builders.TaskPayloadBuilder;
@@ -61,7 +62,7 @@ public class TaskRuntimeCandidatesTest {
         assertThat(task.getAssignee()).isEqualTo("dean");
         assertThat(task.getStatus()).isEqualTo(Task.TaskStatus.ASSIGNED);
 
-        List<String> userCandidatesOnTask = task.getCandidateUsers();
+        Set<String> userCandidatesOnTask = task.getCandidateUsers();
         assertThat(userCandidatesOnTask).isNotNull();
         assertThat(userCandidatesOnTask.size()).isEqualTo(1);
 
@@ -137,7 +138,7 @@ public class TaskRuntimeCandidatesTest {
                 .contains("test");
 
         TaskImpl task = (TaskImpl) taskRuntime.task(createTask.getId());
-        List<String> groupCandidatesOnTask = task.getCandidateGroups();
+        Set<String> groupCandidatesOnTask = task.getCandidateGroups();
         assertThat(groupCandidatesOnTask).isNotNull();
         assertThat(groupCandidatesOnTask.size()).isEqualTo(1);
 
